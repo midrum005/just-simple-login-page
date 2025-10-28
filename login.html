@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <title>ล็อกอินเพื่อเพิ่มกล้อง</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #dfdf0f;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #005fa3;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .message {
+        text-align: center;
+        margin-bottom: 12px;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>ล็อกอิน</h2>
+      <div id="login-form">
+        <div class="message" id="login-msg"></div>
+        <input type="text" id="username" placeholder="ชื่อผู้ใช้" />
+        <input type="password" id="password" placeholder="รหัสผ่าน" />
+        <button onclick="handleLogin()">เข้าสู่ระบบ</button>
+      </div>
+
+      <div id="camera-form" class="hidden">
+        <h2>เพิ่มกล้องใหม่</h2>
+        <input type="text" id="cam-name" placeholder="ชื่อกล้อง" />
+        <input type="text" id="cam-id" placeholder="รหัสกล้อง (stream ID)" />
+        <input type="number" step="any" id="cam-lat" placeholder="ละติจูด" />
+        <input type="number" step="any" id="cam-lng" placeholder="ลองจิจูด" />
+        <button onclick="handleAddCamera()">เพิ่มกล้อง</button>
+      </div>
+    </div>
+
+    <script>
+      const VALID_USERNAME = "admin";
+      const VALID_PASSWORD = "123456";
+
+      function handleLogin() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const msg = document.getElementById("login-msg");
+
+        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+          msg.textContent = "";
+          document.getElementById("login-form").classList.add("hidden");
+          document.getElementById("camera-form").classList.remove("hidden");
+        } else {
+          msg.textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+        }
+      }
+
+      function handleAddCamera() {
+        const name = document.getElementById("cam-name").value.trim();
+        const id = document.getElementById("cam-id").value.trim();
+        const lat = parseFloat(document.getElementById("cam-lat").value);
+        const lng = parseFloat(document.getElementById("cam-lng").value);
+
+        if (name && id && !isNaN(lat) && !isNaN(lng)) {
+          alert(`เพิ่มกล้อง: ${name}\nรหัส: ${id}\nพิกัด: (${lat}, ${lng})`);
+
+        } else {
+          alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+        }
+      }
+    </script>
+  </body>
+</html>
